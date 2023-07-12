@@ -4,6 +4,7 @@ import { VDataTable } from 'vuetify/labs/VDataTable'
 import heroEmpty1 from '@images/hero/hero-empty1.png'
 
 const searchConnectedDevice = ref('')
+const dialog = ref(false)
 
 const connectedDevicesHeaders = [
   { title: 'BROWSER', key: 'browser' },
@@ -71,7 +72,7 @@ const filteredConnectedDevices = computed(() => {
     <h2>Selamat Datang</h2>
     <p>Ingin pantau proyek IoT-mu yang mana?</p>
     <VCard
-      v-if="filteredConnectedDevices.length > 0"
+      v-if="connectedDevices.length > 0"
       class="pa-6"
     >
       <VCardTitle class="pa-0">
@@ -134,12 +135,66 @@ const filteredConnectedDevices = computed(() => {
           Ada Proyek Baru
         </VCardTitle>
         <p>Datarkan proyekmu terlebih dahulu</p>
-        <VBtn
-          prepend-icon="mdi-plus"
-          variant="text"
+
+        <VDialog
+          v-model="dialog"
+          persistent
+          width="auto"
         >
-          Tambah
-        </VBtn>
+          <template #activator="{ props }">
+            <VBtn
+              v-bind="props"
+              prepend-icon="mdi-plus"
+              variant="text"
+            >
+              Tambah
+            </VBtn>
+          </template>
+          <VCard>
+            <VCardTitle class="mt-6">
+              <div class="d-flex justify-space-between">
+                <span class="text-h5 ">Proyek baru</span>
+                <VBtn
+                  variant="text"
+                  @click="dialog = false"
+                >
+                  <VIcon>mdi-close</VIcon>
+                </VBtn>
+              </div>
+            </VCardTitle>
+            <VCardSubtitle>
+              <p class="text-h12">
+                Buat projek untuk kemudahan pemantauan unit.
+              </p>
+            </VCardSubtitle>
+            <VCardText>
+              <VContainer class="pa-0">
+                <VRow class="d-block">
+                  <VCol cols="12">
+                    <VTextField
+                      label="Nama Proyek"
+                      required
+                    />
+                  </VCol>
+                  <VCol cols="12">
+                    <VTextarea
+                      label="Deskripsi Proyek"
+                      required
+                    />
+                  </VCol>
+                  <VCol cols="12">
+                    <VBtn
+                      class="btn btn-primary d-block w-100"
+                      @click="dialog = false"
+                    >
+                      Masuk
+                    </VBtn>
+                  </VCol>
+                </VRow>
+              </VContainer>
+            </VCardText>
+          </VCard>
+        </VDialog>
       </VCard>
     </VCol>
   </div>
