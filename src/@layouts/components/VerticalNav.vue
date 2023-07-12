@@ -64,7 +64,7 @@ const handleNavScroll = (evt: Event) => {
           />
 
           <h1 class="leading-normal">
-            sneat
+            Ecodify
           </h1>
         </RouterLink>
       </slot>
