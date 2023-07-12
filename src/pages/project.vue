@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { VDataTable } from 'vuetify/labs/VDataTable'
-import heroEmpty1 from '@images/hero/hero-empty1.png'
+import heroEmpty2 from '@images/hero/hero-empty2.png'
 
 const searchConnectedDevice = ref('')
+const dialog = ref(false)
+const editDialog = ref(false)
+const deleteDialog = ref(false)
 
 const connectedDevicesHeaders = [
   { title: 'BROWSER', key: 'browser' },
   { title: 'DEVICE', key: 'device' },
   { title: 'LOCATION', key: 'location' },
-  { title: 'RECENT ACTIVITY', key: 'recentActivity' },
+  { title: '', key: 'action' },
 ]
 
 const connectedDevices = [
@@ -68,14 +71,75 @@ const filteredConnectedDevices = computed(() => {
 
 <template>
   <div>
-    <h2>Selamat Datang</h2>
-    <p>Ingin pantau proyek IoT-mu yang mana?</p>
+    <h2>Proyek</h2>
+    <p>Buat sebuah proyek dan hubungkan dengan perangkat favorit mu</p>
     <VCard
-      v-if="filteredConnectedDevices.length > 0"
+      v-if="connectedDevicesHeaders.length > 0"
       class="pa-6"
     >
       <VCardTitle class="pa-0">
-        Perangkat yang terhubung
+        <div class="d-flex justify-space-between">
+          <span class="text-h5">Proyek anda</span>
+
+          <VDialog
+            v-model="dialog"
+            persistent
+            width="auto"
+          >
+            <template #activator="{ props }">
+              <VBtn
+                v-bind="props"
+                prepend-icon="mdi-plus"
+              >
+                Tambah
+              </VBtn>
+            </template>
+            <VCard>
+              <VCardTitle class="mt-6">
+                <div class="d-flex justify-space-between">
+                  <span class="text-h5 ">Buat Proyek</span>
+                  <VBtn
+                    variant="text"
+                    @click="dialog = false"
+                  >
+                    <VIcon>mdi-close</VIcon>
+                  </VBtn>
+                </div>
+              </VCardTitle>
+              <VCardSubtitle>
+                <p class="text-h12">
+                  Buat projek untuk kemudahan pemantauan unit.
+                </p>
+              </VCardSubtitle>
+              <VCardText>
+                <VContainer class="pa-0">
+                  <VRow class="d-block">
+                    <VCol cols="12">
+                      <VTextField
+                        label="Nama Proyek"
+                        required
+                      />
+                    </VCol>
+                    <VCol cols="12">
+                      <VTextarea
+                        label="Deskripsi Proyek"
+                        required
+                      />
+                    </VCol>
+                    <VCol cols="12">
+                      <VBtn
+                        class="btn btn-primary d-block w-100"
+                        @click="dialog = false"
+                      >
+                        Masuk
+                      </VBtn>
+                    </VCol>
+                  </VRow>
+                </VContainer>
+              </VCardText>
+            </VCard>
+          </VDialog>
+        </div>
       </VCardTitle>
       <p class="text-primary">
         Jumlah : 20
@@ -93,54 +157,154 @@ const filteredConnectedDevices = computed(() => {
         :headers="connectedDevicesHeaders"
         :items="filteredConnectedDevices"
         class="my-6 border"
-      />
+      >
+        <template #item.action>
+          <VDialog
+            v-model="editDialog"
+            persistent
+            width="auto"
+          >
+            <template #activator="{ props }">
+              <VBtn
+                v-bind="props"
+                class="ma-2"
+                variant="text"
+                icon="mdi-pencil"
+                color="info"
+              />
+            </template>
+            <VCard>
+              <VCardTitle class="mt-6">
+                <div class="d-flex justify-space-between">
+                  <span class="text-h5 ">Buat Proyek</span>
+                  <VBtn
+                    variant="text"
+                    @click="editDialog = !editDialog"
+                  >
+                    <VIcon>mdi-close</VIcon>
+                  </VBtn>
+                </div>
+              </VCardTitle>
+              <VCardSubtitle>
+                <p class="text-h12">
+                  Buat projek untuk kemudahan pemantauan unit.
+                </p>
+              </VCardSubtitle>
+              <VCardText>
+                <VContainer class="pa-0">
+                  <VRow class="d-block">
+                    <VCol cols="12">
+                      <VTextField
+                        label="Nama Proyek"
+                        required
+                      />
+                    </VCol>
+                    <VCol cols="12">
+                      <VTextarea
+                        label="Deskripsi Proyek"
+                        required
+                      />
+                    </VCol>
+                    <VCol cols="12">
+                      <VBtn
+                        class="btn btn-primary d-block w-100"
+                        @click="editDialog = !editDialog"
+                      >
+                        Masuk
+                      </VBtn>
+                    </VCol>
+                  </VRow>
+                </VContainer>
+              </VCardText>
+            </VCard>
+          </VDialog>
+
+          <VDialog
+            v-model="deleteDialog"
+            persistent
+            width="auto"
+          >
+            <template #activator="{ props }">
+              <VBtn
+                v-bind="props"
+                class="ma-2"
+                variant="text"
+                icon="mdi-delete"
+                color="error"
+              />
+            </template>
+            <VCard>
+              <VCardTitle class="mt-6">
+                <div class="d-flex justify-space-between">
+                  <span class="text-h5 ">Buat Proyek</span>
+                  <VBtn
+                    variant="text"
+                    @click="deleteDialog = !deleteDialog"
+                  >
+                    <VIcon>mdi-close</VIcon>
+                  </VBtn>
+                </div>
+              </VCardTitle>
+              <VCardSubtitle>
+                <p class="text-h12">
+                  Buat projek untuk kemudahan pemantauan unit.
+                </p>
+              </VCardSubtitle>
+              <VCardText>
+                <VContainer class="pa-0">
+                  <VRow class="d-block">
+                    <VCol cols="12">
+                      <VTextField
+                        label="Nama Proyek"
+                        required
+                      />
+                    </VCol>
+                    <VCol cols="12">
+                      <VTextarea
+                        label="Deskripsi Proyek"
+                        required
+                      />
+                    </VCol>
+                    <VCol cols="12">
+                      <VBtn
+                        class="btn btn-primary d-block w-100"
+                        @click="deleteDialog = !deleteDialog"
+                      >
+                        Masuk
+                      </VBtn>
+                    </VCol>
+                  </VRow>
+                </VContainer>
+              </VCardText>
+            </VCard>
+          </VDialog>
+        </template>
+      </VDataTable>
     </VCard>
 
     <VCard
       v-else
       class="pa-12"
     >
-      <VRow class="d-flex align-center">
+      <VRow class="d-flex align-center justify-center">
         <VCol
-          lg="6"
-          md="12"
-          class="d-flex justify-end"
+          col="12"
+          class="d-flex justify-center"
         >
           <div>
             <VImg
-              :src="heroEmpty1"
-              width="300"
+              :src="heroEmpty2"
+              width="400"
             />
+            <h3 class="text-center text-primary mt-7">
+              Kamu belum membuat proyek apapun.
+            </h3>
+            <h2 class="text-center">
+              Buat proyek sekarang
+            </h2>
           </div>
-        </VCol>
-        <VCol
-          lg="3"
-          md="12"
-        >
-          <h2 class="text-center">
-            Ups, kamu belum <br> menghubungkan <br> perangkat apapun
-          </h2>
         </VCol>
       </VRow>
     </VCard>
-
-    <VCol
-      lg="6"
-      md="12"
-      class="pa-0"
-    >
-      <VCard class="pa-6 col-6 mt-6 elevation-0">
-        <VCardTitle class="pa-0">
-          Ada Proyek Baru
-        </VCardTitle>
-        <p>Datarkan proyekmu terlebih dahulu</p>
-        <VBtn
-          prepend-icon="mdi-plus"
-          variant="text"
-        >
-          Tambah
-        </VBtn>
-      </VCard>
-    </VCol>
   </div>
 </template>
