@@ -17,6 +17,16 @@ const router = createRouter({
           component: () => import('../pages/project.vue'),
         },
         {
+          path: '/project/:id',
+          name: 'detail-project',
+          component: () => import('../pages/detail-project.vue'),
+        },
+        {
+          path: '/device/:id',
+          name: 'detail-device',
+          component: () => import('../pages/detail-device.vue'),
+        },
+        {
           path: 'account-settings',
           component: () => import('../pages/account-settings.vue'),
         },
