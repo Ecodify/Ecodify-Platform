@@ -7,6 +7,7 @@ import router from '@/router'
 import '@core/scss/template/index.scss'
 import '@layouts/styles/index.scss'
 import '@styles/styles.scss'
+import VueJsonPretty from 'vue-json-pretty'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 
@@ -19,6 +20,7 @@ const app = createApp(App)
 app.use(vuetify)
 app.use(createPinia())
 app.use(router)
+app.use(VueJsonPretty)
 
 // Mount vue app
 app.mount('#app')
