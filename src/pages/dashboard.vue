@@ -187,7 +187,7 @@ const filteredConnectedDevices = computed(() => {
                       class="btn btn-primary d-block w-100"
                       @click="dialog = false"
                     >
-                      Masuk
+                      Buat
                     </VBtn>
                   </VCol>
                 </VRow>
