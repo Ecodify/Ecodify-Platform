@@ -21,7 +21,7 @@ const dialog = ref(false)
     <VCard class="pa-6">
       <VCardTitle class="pa-0">
         <div class="d-flex justify-space-between">
-          <span class="text-h5">Proyek anda</span>
+          <span class="text-h5">Perangkat anda</span>
 
           <VDialog
             v-model="dialog"

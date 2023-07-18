@@ -74,11 +74,11 @@ const filteredConnectedDevices = computed(() => {
             :src="heroEmpty2"
             width="400"
           />
-          <h3 class="text-center text-primary mt-7">
-            Kamu belum membuat proyek apapun.
+          <h3 class="text-center text-primary font-weight-light mt-7">
+            Kamu <span class="font-weight-medium">belum membuat proyek</span> apapun.
           </h3>
-          <h2 class="text-center">
-            Buat proyek sekarang
+          <h2 class="text-center text-primary font-weight-light">
+            <span class="font-weight-medium">Buat proyek</span> sekarang
           </h2>
         </div>
       </VCol>

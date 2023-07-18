@@ -8,9 +8,9 @@ const theme: VuetifyOptions['theme'] = {
     light: {
       dark: false,
       colors: {
-        'primary': '#696CFF',
+        'primary': '#14279B',
         'on-primary': '#fff',
-        'secondary': '#8592A3',
+        'secondary': '#DEE3FF',
         'on-secondary': '#fff',
         'success': '#71DD37',
         'on-success': '#fff',

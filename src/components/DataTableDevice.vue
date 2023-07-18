@@ -3,30 +3,26 @@ import { ref } from 'vue'
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import DeleteDialog from './DeleteDialog.vue'
 import EditDialog from './EditDialog.vue'
-import heroEmpty2 from '@images/hero/hero-empty2.png'
+import heroEmpty3 from '@images/hero/hero-empty3.png'
 
 const searchConnectedDevice = ref('')
 
 const connectedDevicesHeaders = [
-  { title: 'BROWSER', key: 'browser' },
-  { title: 'DEVICE', key: 'device' },
-  { title: 'LOCATION', key: 'location' },
-  { title: '', key: 'action' },
+  { title: 'No', key: 'no' },
+  { title: 'Nama Perangkat', key: 'deviceName' },
+  { title: 'Aksi', key: 'action' },
 ]
 
 const connectedDevices = [
   {
-    browser: 'Chrome on Windows',
-    device: 'HP Spectre 360',
-    location: 'New York, NY',
-    recentActivity: '28 Apr 2022, 18:20',
-    deviceIcon: { icon: 'bxl-windows', color: 'primary' },
+    no: '1',
+    deviceName: 'Modul_PI',
   },
 ]
 
 const filteredConnectedDevices = computed(() => {
   return connectedDevices.filter(dataDevices =>
-    dataDevices.browser.toLowerCase().includes(
+    dataDevices.deviceName.toLowerCase().includes(
       searchConnectedDevice.value.toLowerCase(),
     ),
   )
@@ -34,7 +30,7 @@ const filteredConnectedDevices = computed(() => {
 </script>
 
 <template>
-  <div v-if="connectedDevicesHeaders.length > 0">
+  <div v-if="connectedDevicesHeaders.length === 0">
     <VTextField
       v-model="searchConnectedDevice"
       append-icon="mdi-magnify"
@@ -75,15 +71,12 @@ const filteredConnectedDevices = computed(() => {
       >
         <div>
           <VImg
-            :src="heroEmpty2"
+            :src="heroEmpty3"
             width="400"
           />
-          <h3 class="text-center text-primary mt-7">
-            Kamu belum membuat proyek apapun.
+          <h3 class="text-center text-primary font-weight-light mt-7">
+            Kamu <span class="font-weight-medium">belum mendaftarkan perangkat</span> apapun.
           </h3>
-          <h2 class="text-center">
-            Buat proyek sekarang
-          </h2>
         </div>
       </VCol>
     </VRow>
