@@ -20,17 +20,13 @@ const isPasswordVisible = ref(false)
     >
       <VCardItem class="justify-center">
         <template #prepend>
-          <div class="d-flex">
+          <div class="d-flex justify-center">
             <div
-              class="d-flex text-primary"
+              class="d-flex text-primary w-75"
               v-html="logo"
             />
           </div>
         </template>
-
-        <VCardTitle class="text-2xl font-weight-bold">
-          sneat
-        </VCardTitle>
       </VCardItem>
 
       <VCardText class="pt-2">
@@ -96,7 +92,7 @@ const isPasswordVisible = ref(false)
                 block
                 type="submit"
               >
-                Sign up
+                Daftar
               </VBtn>
             </VCol>
 

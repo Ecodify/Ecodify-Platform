@@ -19,25 +19,21 @@ const isPasswordVisible = ref(false)
     >
       <VCardItem class="justify-center">
         <template #prepend>
-          <div class="d-flex">
+          <div class="d-flex justify-center">
             <div
-              class="d-flex text-primary"
+              class="d-flex text-primary w-75"
               v-html="logo"
             />
           </div>
         </template>
-
-        <VCardTitle class="text-2xl font-weight-bold">
-          sneat
-        </VCardTitle>
       </VCardItem>
 
       <VCardText class="pt-2">
-        <h5 class="text-h5 mb-1">
-          Welcome to sneat! 👋🏻
+        <h5 class="text-h4 mb-1">
+          Welcome Back! 👋🏻
         </h5>
         <p class="mb-0">
-          Please sign-in to your account and start the adventure
+          Enter to handle the technology around you!
         </p>
       </VCardText>
 
@@ -86,7 +82,7 @@ const isPasswordVisible = ref(false)
                 block
                 type="submit"
               >
-                Login
+                masuk
               </VBtn>
             </VCol>
 
@@ -95,12 +91,12 @@ const isPasswordVisible = ref(false)
               cols="12"
               class="text-center text-base"
             >
-              <span>New on our platform?</span>
+              <span>Belum mendaftarkan akun?</span>
               <RouterLink
-                class="text-primary ms-2"
+                class="text-primary text-decoration-underline ms-2"
                 to="/register"
               >
-                Create an account
+                Daftar akun
               </RouterLink>
             </VCol>
 
