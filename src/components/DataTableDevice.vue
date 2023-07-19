@@ -30,7 +30,7 @@ const filteredConnectedDevices = computed(() => {
 </script>
 
 <template>
-  <div v-if="connectedDevicesHeaders.length === 0">
+  <div v-if="connectedDevicesHeaders.length > 0">
     <VTextField
       v-model="searchConnectedDevice"
       append-icon="mdi-magnify"
