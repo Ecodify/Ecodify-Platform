@@ -1,12 +1,41 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import guest from '@/router/middleware/guest'
+import user from '@/router/middleware/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/', redirect: '/dashboard' },
+    {
+      path: '',
+      name: 'home',
+      redirect: 'login',
+      meta: {
+        middleware: guest,
+      },
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../pages/login.vue'),
+      meta: {
+        middleware: guest,
+      },
+    },
+
+    {
+      path: '/register',
+      name: 'register',
+      component: () => import('../pages/register.vue'),
+      meta: {
+        middleware: guest,
+      },
+    },
     {
       path: '/',
       component: () => import('../layouts/default.vue'),
+      meta: {
+        middleware: user,
+      },
       children: [
         {
           path: 'dashboard',
@@ -56,25 +85,34 @@ const router = createRouter({
         },
       ],
     },
-    {
-      path: '/',
-      component: () => import('../layouts/blank.vue'),
-      children: [
-        {
-          path: 'login',
-          component: () => import('../pages/login.vue'),
-        },
-        {
-          path: 'register',
-          component: () => import('../pages/register.vue'),
-        },
-        {
-          path: '/:pathMatch(.*)*',
-          component: () => import('../pages/[...all].vue'),
-        },
-      ],
-    },
   ],
+})
+
+// {
+//   path: '/',
+//   component: () => import('../layouts/blank.vue'),
+//   children: [
+//     {
+//       path: 'login',
+//       component: () => import('../pages/login.vue'),
+//     },
+//     {
+//       path: 'register',
+//       component: () => import('../pages/register.vue'),
+//     },
+//     {
+//       path: '/:pathMatch(.*)*',
+//       component: () => import('../pages/[...all].vue'),
+//     },
+//   ],
+// },
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.middleware) {
+    const middleware: any = to.meta.middleware
+
+    middleware({ to, from, next })
+  }
 })
 
 export default router
