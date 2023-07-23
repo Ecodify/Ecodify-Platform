@@ -1,14 +1,43 @@
 <script setup lang="ts">
+import axios from 'axios'
+import { RouterLink, useRouter } from 'vue-router'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import logo from '@images/logo.svg?raw'
 
+const baseUrl = import.meta.env.VITE_PUBLIC_API_BASE_URL
+
 const form = ref({
-  email: '',
-  password: '',
+  username: 'develop',
+  password: 'develop',
   remember: false,
 })
 
+const router = useRouter()
 const isPasswordVisible = ref(false)
+let isLoading = false
+
+async function login() {
+  try {
+    isLoading = true
+
+    const response = await axios.post(
+      `${baseUrl}/Login`, {
+        username: form.value.username,
+        password: form.value.password,
+      },
+    )
+
+    localStorage.setItem('token', response.data.dataUser.token)
+    localStorage.setItem('data_user', JSON.stringify(response.data.dataUser))
+    router.push('/dashboard')
+  }
+  catch (error) {
+    console.error(error)
+  }
+  finally {
+    setTimeout(() => (isLoading = false), 3000)
+  }
+}
 </script>
 
 <template>
@@ -43,7 +72,7 @@ const isPasswordVisible = ref(false)
             <!-- email -->
             <VCol cols="12">
               <VTextField
-                v-model="form.email"
+                v-model="form.username"
                 autofocus
                 placeholder="johndoe@email.com"
                 label="Email"
@@ -79,8 +108,10 @@ const isPasswordVisible = ref(false)
 
               <!-- login button -->
               <VBtn
+                :loading="isLoading"
                 block
                 type="submit"
+                @click="login"
               >
                 masuk
               </VBtn>

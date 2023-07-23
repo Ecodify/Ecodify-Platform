@@ -18,6 +18,10 @@ const connectedDevices = [
     projectName: 'My_Smart-IoT',
     description: 'This project usefull for make API To connected to  IoT Smart Meter App...',
   },
+  {
+    projectName: 'My_Smart-IoT',
+    description: 'This project usefull for make API To connected to  IoT Smart Meter App...',
+  },
 ]
 
 const filteredConnectedDevices = computed(() => {
