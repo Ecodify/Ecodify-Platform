@@ -1,31 +1,34 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import DeleteDialog from './DeleteDialog.vue'
 import EditDialog from './EditDialog.vue'
 import heroEmpty3 from '@images/hero/hero-empty3.png'
+import { useDevice } from '@/stores/device'
 
 const searchConnectedDevice = ref('')
+const storeDevice = useDevice()
+const route = useRoute()
 
 const connectedDevicesHeaders = [
-  { title: 'No', key: 'no' },
   { title: 'Nama Perangkat', key: 'deviceName' },
+  { title: 'Deksripsi', key: 'deviceDescription' },
   { title: 'Aksi', key: 'action' },
 ]
 
-const connectedDevices = [
-  {
-    no: '1',
-    deviceName: 'Modul_PI',
-  },
-]
-
 const filteredConnectedDevices = computed(() => {
-  return connectedDevices.filter(dataDevices =>
-    dataDevices.deviceName.toLowerCase().includes(
+  return storeDevice.getDataTableDevice.filter(value =>
+    value.deviceName.toLowerCase().includes(
       searchConnectedDevice.value.toLowerCase(),
     ),
   )
+})
+
+onMounted(() => {
+  const id = route.params.id
+
+  storeDevice.getDevice(id)
 })
 </script>
 
@@ -44,13 +47,13 @@ const filteredConnectedDevices = computed(() => {
       :items="filteredConnectedDevices"
       class="my-6 border rounded"
     >
-      <template #item.action>
+      <template #item.action="{ item }">
         <VBtn
           class="ma-2"
           variant="text"
           icon="mdi-eye-outline"
           color="info"
-          :to="{ name: 'detail-device', params: { id: '1' } }"
+          :to="{ name: 'detail-device', params: { id: `${item.raw.deviceId}` } }"
         />
 
         <EditDialog />

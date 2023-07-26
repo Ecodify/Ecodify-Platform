@@ -1,6 +1,16 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
 import VueJsonPretty from 'vue-json-pretty'
+import { useDevice } from '@/stores/device'
 import 'vue-json-pretty/lib/styles.css'
+
+const storeDevice = useDevice()
+const route = useRoute()
+const id = route.params.id
+
+const filteredDevice = computed(() => {
+  return storeDevice.getDeviceById(id)
+})
 
 const dataExample = [
   {
@@ -22,6 +32,10 @@ const dataExample = [
   },
   { path: '/loading', component: 'showLoading' },
 ]
+
+onMounted(() => {
+  
+})
 </script>
 
 <template>
@@ -33,15 +47,15 @@ const dataExample = [
         @click="$router.go(-1)"
       />
       <div class="text-end">
-        <h2>My_Smart-IOT</h2>
-        <p>This project usefull for make API To Conenct  IoT Smart Meter App.</p>
+        <h2>{{ filteredDevice?.name }}</h2>
+        <p>{{ filteredDevice?.description }}</p>
       </div>
     </div>
     <VCard class="pa-6">
       <VCardTitle class="pa-0">
         <div class="d-flex justify-space-between">
           <p class="text-h5">
-            Perangkat Anda <span class="text-primary">Modul PI</span>
+            Perangkat Anda <span class="text-primary">{{ filteredDevice?.name }}</span>
           </p>
         </div>
       </VCardTitle>
