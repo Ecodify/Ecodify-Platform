@@ -1,43 +1,56 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { RouterLink, useRouter } from 'vue-router'
+import VueCookies from 'vue-cookies'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import logo from '@images/logo.svg?raw'
 
-const baseUrl = import.meta.env.VITE_PUBLIC_API_BASE_URL
+import { useLogin } from '@/stores/login'
+
+const store = useLogin()
+
+// const baseUrl = import.meta.env.VITE_PUBLIC_API_BASE_URL
 
 const form = ref({
-  username: 'develop',
-  password: 'develop',
+  // username: 'develop',
+  // password: 'develop',
   remember: false,
 })
 
-const router = useRouter()
+// const router = useRouter()
 const isPasswordVisible = ref(false)
-let isLoading = false
 
-async function login() {
-  try {
-    isLoading = true
+// let isLoading = false
 
-    const response = await axios.post(
-      `${baseUrl}/Login`, {
-        username: form.value.username,
-        password: form.value.password,
-      },
-    )
+// async function login() {
+//   try {
+//     isLoading = true
 
-    localStorage.setItem('token', response.data.dataUser.token)
-    localStorage.setItem('data_user', JSON.stringify(response.data.dataUser))
-    router.push('/dashboard')
-  }
-  catch (error) {
-    console.error(error)
-  }
-  finally {
-    setTimeout(() => (isLoading = false), 3000)
-  }
-}
+//     const response = await axios.post(
+//       `${baseUrl}/Login`, {
+//         username: form.value.username,
+//         password: form.value.password,
+//       },
+//     )
+
+//     if (response.data.status) {
+//       VueCookies.set('data_user', JSON.stringify(response.data.dataUser), { expires: '1h' })
+
+//       VueCookies.set('token', response.data.dataUser.token, { expires: '1h' })
+//     }
+
+//     // localStorage.setItem('token', response.data.dataUser.token)
+//     // localStorage.setItem('data_user', JSON.stringify(response.data.dataUser))
+
+//     router.push('/dashboard')
+//   }
+//   catch (error) {
+//     console.error(error)
+//   }
+//   finally {
+//     setTimeout(() => (isLoading = false), 3000)
+//   }
+// }
 </script>
 
 <template>
@@ -72,23 +85,25 @@ async function login() {
             <!-- email -->
             <VCol cols="12">
               <VTextField
-                v-model="form.username"
+                :value="store.username"
                 autofocus
                 placeholder="johndoe@email.com"
                 label="Email"
                 type="email"
+                @change="store.setUsername($event)"
               />
             </VCol>
 
             <!-- password -->
             <VCol cols="12">
               <VTextField
-                v-model="form.password"
+                :value="store.password"
                 label="Password"
                 placeholder="············"
                 :type="isPasswordVisible ? 'text' : 'password'"
                 :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
                 @click:append-inner="isPasswordVisible = !isPasswordVisible"
+                @change="store.setPassword($event)"
               />
 
               <!-- remember me checkbox -->
@@ -108,10 +123,10 @@ async function login() {
 
               <!-- login button -->
               <VBtn
-                :loading="isLoading"
+                :loading="store.isLoading"
                 block
                 type="submit"
-                @click="login"
+                @click="store.onSubmitLogin"
               >
                 masuk
               </VBtn>

@@ -1,56 +1,40 @@
-// import { defineStore } from 'pinia'
-// import type { CookieOptions } from '#app'
+import { defineStore } from 'pinia'
+import type { CookiesConfig } from 'vue-cookies'
+import VueCookies from 'vue-cookies'
 
-// export const useAuth = defineStore('auth', {
-//   state: () => ({
-//     token: null as string | null,
-//     role_name: null as string | null,
-//     company_id: null as string | null,
-//   }),
+export const useAuth = defineStore('auth', {
+  state: () => ({
+    token: null as string | null,
+  }),
 
-//   getters: {
-//     getIsAuthenticated(): boolean {
-//       return this.token !== ''
-//     },
+  getters: {
+    getIsAuthenticated(): boolean {
+      return this.token !== ''
+    },
+    getToken(): any {
+      return this.token
+    },
+  },
 
-//     getIsRoleSuperAdmin(): boolean {
-//       return this.role_name === 'super-admin'
-//     },
-//   },
+  actions: {
+    signIn(token: string | null) {
+      this.token = token
 
-//   actions: {
-//     signIn(token: string | null, role_name: string | null, company_id: string | null, permissions: any[]) {
-//       this.token = token
-//       this.role_name = role_name
-//       this.company_id = company_id
+      const options: CookiesConfig = { expires: '1h', sameSite: 'lax', secure: true }
 
-//       const options: CookieOptions = { sameSite: 'lax', secure: true }
+      VueCookies.set('token', token, options)
+    },
 
-//       const data = useCookie('data', options)
+    signOut() {
+      this.token = null
 
-//       data.value = JSON.stringify({
-//         token,
-//         role_name,
-//         company_id,
-//         permissions,
-//       })
-//     },
+      const options: CookiesConfig = { sameSite: 'lax', secure: true }
 
-//     signOut() {
-//       this.token = null
-//       this.role_name = null
-//       this.company_id = null
+      VueCookies.set('token', null, options)
 
-//       const options: CookieOptions = { sameSite: 'lax', secure: true }
-
-//       const data = useCookie('data', options)
-
-//       data.value = null
-
-//       // delay to make sure cookie is cleared
-//       setTimeout(() => {
-//         location.reload()
-//       }, 100)
-//     },
-//   },
-// })
+      setTimeout(() => {
+        location.reload()
+      }, 100)
+    },
+  },
+})

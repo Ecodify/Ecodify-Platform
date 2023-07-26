@@ -1,44 +1,44 @@
-// import { defineStore } from 'pinia'
-// import { navigateTo } from '#app'
-// import { api } from '~/services/api'
-// import { useAuth } from '~/stores/general/auth'
+import { defineStore } from 'pinia'
+import { api } from '@/services/api'
+import { useAuth } from '@/stores/auth'
+import type { User } from '@/types/server-response'
 
-// export const useLogin = defineStore('login', {
-//   state: () => ({
-//     email: 'admin@vms.com',
-//     password: '1234qwer',
-//     isLoading: false,
-//   }),
-//   actions: {
-//     setEmail(email: string) {
-//       this.email = email
-//     },
-//     setPassword(password: string) {
-//       this.password = password
-//     },
-//     onSubmitLogin() {
-//       this.isLoading = true
+export const useLogin = defineStore('login', {
+  state: () => ({
+    username: 'develop',
+    password: 'develop',
+    isLoading: false,
+  }),
+  actions: {
+    setUsername(username: string) {
+      this.username = username
+    },
+    setPassword(password: string) {
+      this.password = password
+    },
+    onSubmitLogin() {
+      this.isLoading = true
 
-//       api.post<User>('/api/v1/auth/login', {
-//         body: {
-//           email: this.email,
-//           password: this.password,
-//         },
-//       },
-//       ).then(result => {
-//         const storeAuth = useAuth()
+      api.post<User>('/Login', {
+        body: {
+          username: this.username,
+          password: this.password,
+        },
+      },
+      ).then(result => {
+        const storeAuth = useAuth()
 
-//         storeAuth.signIn(result.data.token, result.data.role_name, result.data.company_id, result.data.permissions)
+        storeAuth.signIn(result.dataUser.token as string)
 
-//         navigateTo('/dashboard')
-//       }).catch(reason => {
-//         showToast.error(reason.message)
+        // navigateTo('/dashboard')
+      }).catch(reason => {
+        console.error(reason.message)
 
-//         return false
-//       }).finally(() => {
-//         this.isLoading = false
-//       })
-//     },
+        return false
+      }).finally(() => {
+        this.isLoading = false
+      })
+    },
 
-//   },
-// })
+  },
+})

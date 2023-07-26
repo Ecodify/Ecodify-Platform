@@ -1,123 +1,122 @@
-// import { useAuth } from '~/stores/general/auth'
+import VueCookies from 'vue-cookies'
+import { useAuth } from '@/stores/auth'
+import type { ServerResponse } from '@/types/server-response'
 
-// export const api = {
-//   provider: (url: string,
-//     queryParams?: Record<string, string> | undefined,
-//     body?: Record<string, string | '' | string[] | undefined | null> | FormData | undefined,
-//     headers?: Record<string, string> | undefined): { newUrl: string; newHeaders: Record<string, string> } => {
-//     const token = useAuth().token
-//     const baseUrl = useRuntimeConfig().public.baseUrl
+export const api = {
+  provider: (url: string,
+    queryParams?: Record<string, string> | undefined,
+    body?: Record<string, string | '' | string[] | undefined | null> | FormData | undefined,
+    headers?: Record<string, string> | undefined): { newUrl: string; newHeaders: Record<string, string> } => {
+    const token = useAuth().token
+    const getToken = VueCookies.get('token') as string
+    const baseUrl = import.meta.env.VITE_PUBLIC_API_BASE_URL
 
-//     if (token) {
-//       headers = {
-//         ...headers,
-//         Authorization: `Bearer ${token}`,
-//       }
-//     }
+    if (token) {
+      headers = {
+        ...headers,
+        token: `${getToken}`,
+      }
+    }
 
-//     let newHeaders = {
-//       ...headers,
-//     }
+    let newHeaders = {
+      ...headers,
+    }
 
-//     if (!(body instanceof FormData)) {
-//       newHeaders = {
-//         'Content-Type': 'application/json',
-//         ...headers,
-//       }
-//     }
+    if (!(body instanceof FormData)) {
+      newHeaders = {
+        'Content-Type': 'application/json',
+        'token': `${getToken}`,
+        ...headers,
+      }
+    }
 
-//     newHeaders = {
-//       Accept: 'application/json',
-//       ...newHeaders,
-//     }
+    newHeaders = {
+      Accept: 'application/json',
+      token: `${getToken}`,
+      ...newHeaders,
+    }
 
-//     const newUrl = queryParams ? `${baseUrl}${url}?${new URLSearchParams(queryParams)}` : `${baseUrl}${url}`
+    const newUrl = queryParams ? `${baseUrl}${url}?${new URLSearchParams(queryParams)}` : `${baseUrl}${url}`
 
-//     return { newUrl, newHeaders }
-//   },
+    return { newUrl, newHeaders }
+  },
 
-//   afterResponse: async <T>(response: Response) => {
-//     const data: ServerResponse<T> = await response.json()
+  afterResponse: async <T>(response: Response) => {
+    const data: ServerResponse<T> = await response.json()
 
-//     if (response.status >= 400) {
-//       showToast.error(data.message)
+    return data
+  },
 
-//       throw new Error(data.message)
-//     }
+  get: async <T>(
+    url: string,
+    option?: {
+      queryParams?: Record<string, string>
+      headers?: Record<string, string>
+    }): Promise<ServerResponse<T>> => {
+    const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.headers)
 
-//     return data
-//   },
+    const response = await fetch(newUrl, {
+      method: 'GET',
+      headers: newHeaders,
+    })
 
-//   get: async <T>(
-//     url: string,
-//     option?: {
-//       queryParams?: Record<string, string>
-//       headers?: Record<string, string>
-//     }): Promise<ServerResponse<T>> => {
-//     const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.headers)
+    return await api.afterResponse<T>(response)
+  },
 
-//     const response = await fetch(newUrl, {
-//       method: 'GET',
-//       headers: newHeaders,
-//     })
+  post: async <T>(
+    url: string,
+    option?: {
+      queryParams?: Record<string, string>
+      body?: Record<string, string | '' | string[] | undefined | null> | FormData
+      headers?: Record<string, string>
+    },
+  ): Promise<ServerResponse<T>> => {
+    const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.body, option?.headers)
 
-//     return await api.afterResponse<T>(response)
-//   },
+    const response = await fetch(newUrl, {
+      method: 'POST',
+      headers: newHeaders,
+      body: option?.body instanceof FormData ? option.body : JSON.stringify(option?.body),
+    })
 
-//   post: async <T>(
-//     url: string,
-//     option?: {
-//       queryParams?: Record<string, string>
-//       body?: Record<string, string | '' | string[] | {}[] | {} | undefined | null> | FormData
-//       headers?: Record<string, string>
-//     },
-//   ): Promise<ServerResponse<T>> => {
-//     const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.body, option?.headers)
+    return await api.afterResponse<T>(response)
+  },
 
-//     const response = await fetch(newUrl, {
-//       method: 'POST',
-//       headers: newHeaders,
-//       body: option?.body instanceof FormData ? option.body : JSON.stringify(option?.body),
-//     })
+  put: async <T>(
+    url: string,
+    option?: {
+      queryParams?: Record<string, string>
+      body?: Record<any, any>
+      headers?: Record<string, string>
+    },
+  ): Promise<ServerResponse<T>> => {
+    const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.body, option?.headers)
 
-//     return await api.afterResponse<T>(response)
-//   },
+    const response = await fetch(newUrl, {
+      method: 'PUT',
+      headers: newHeaders,
+      body: JSON.stringify(option?.body),
+    })
 
-//   put: async <T>(
-//     url: string,
-//     option?: {
-//       queryParams?: Record<string, string>
-//       body?: Record<any, any>
-//       headers?: Record<string, string>
-//     },
-//   ): Promise<ServerResponse<T>> => {
-//     const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.body, option?.headers)
+    return await api.afterResponse<T>(response)
+  },
 
-//     const response = await fetch(newUrl, {
-//       method: 'PUT',
-//       headers: newHeaders,
-//       body: JSON.stringify(option?.body),
-//     })
+  delete: async <T>(
+    url: string,
+    option?: {
+      queryParams?: Record<string, string>
+      body?: Record<any, any>
+      headers?: Record<string, string>
+    },
+  ): Promise<ServerResponse<T>> => {
+    const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.body, option?.headers)
 
-//     return await api.afterResponse<T>(response)
-//   },
+    const response = await fetch(newUrl, {
+      method: 'DELETE',
+      headers: newHeaders,
+      body: JSON.stringify(option?.body),
+    })
 
-//   delete: async <T>(
-//     url: string,
-//     option?: {
-//       queryParams?: Record<string, string>
-//       body?: Record<any, any>
-//       headers?: Record<string, string>
-//     },
-//   ): Promise<ServerResponse<T>> => {
-//     const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.body, option?.headers)
-
-//     const response = await fetch(newUrl, {
-//       method: 'DELETE',
-//       headers: newHeaders,
-//       body: JSON.stringify(option?.body),
-//     })
-
-//     return await api.afterResponse<T>(response)
-//   },
-// }
+    return await api.afterResponse<T>(response)
+  },
+}
