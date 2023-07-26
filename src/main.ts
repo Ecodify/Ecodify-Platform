@@ -7,9 +7,10 @@ import router from '@/router'
 import '@core/scss/template/index.scss'
 import '@layouts/styles/index.scss'
 import '@styles/styles.scss'
-import VueJsonPretty from 'vue-json-pretty'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
+import VueJsonPretty from 'vue-json-pretty'
+import VueCookies from 'vue-cookies'
 
 loadFonts()
 
@@ -21,6 +22,9 @@ app.use(vuetify)
 app.use(createPinia())
 app.use(router)
 app.use(VueJsonPretty)
+app.use(VueCookies, {
+  expires: '1h',
+})
 
 // Mount vue app
 app.mount('#app')
