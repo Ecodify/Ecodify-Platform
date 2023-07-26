@@ -1,40 +1,35 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import DeleteDialog from './DeleteDialog.vue'
 import EditDialog from './EditDialog.vue'
 import heroEmpty2 from '@images/hero/hero-empty2.png'
+import { useProject } from '@/stores/project'
 
 const searchConnectedDevice = ref('')
+const storeProject = useProject()
 
-const connectedDevicesHeaders = [
+const projectHeaders = [
   { title: 'Nama Proyek', key: 'projectName' },
-  { title: 'Deskripsi', key: 'description' },
+  { title: 'Deskripsi', key: 'projectDescription' },
   { title: 'Aksi', key: 'action' },
 ]
 
-const connectedDevices = [
-  {
-    projectName: 'My_Smart-IoT',
-    description: 'This project usefull for make API To connected to  IoT Smart Meter App...',
-  },
-  {
-    projectName: 'My_Smart-IoT',
-    description: 'This project usefull for make API To connected to  IoT Smart Meter App...',
-  },
-]
-
-const filteredConnectedDevices = computed(() => {
-  return connectedDevices.filter(dataDevices =>
-    dataDevices.projectName.toLowerCase().includes(
+const filteredlistProject = computed(() => {
+  return storeProject.getDataTableProject.filter(value =>
+    value.projectName.toLowerCase().includes(
       searchConnectedDevice.value.toLowerCase(),
     ),
   )
 })
+
+onMounted(() => {
+  storeProject.getProject()
+})
 </script>
 
 <template>
-  <div v-if="connectedDevicesHeaders.length > 0">
+  <div v-if="storeProject.project.length !== 0">
     <VTextField
       v-model="searchConnectedDevice"
       append-icon="mdi-magnify"
@@ -44,17 +39,17 @@ const filteredConnectedDevices = computed(() => {
       class="border-0"
     />
     <VDataTable
-      :headers="connectedDevicesHeaders"
-      :items="filteredConnectedDevices"
+      :headers="projectHeaders"
+      :items="filteredlistProject"
       class="my-6 border rounded"
     >
-      <template #item.action>
+      <template #item.action="{ item }">
         <VBtn
           class="ma-2"
           variant="text"
           icon="mdi-eye-outline"
           color="info"
-          :to="{ name: 'detail-project', params: { id: '1' } }"
+          :to="{ name: 'detail-project', params: { id: `${item.raw.projectId}` } }"
         />
 
         <EditDialog />

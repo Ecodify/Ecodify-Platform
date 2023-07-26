@@ -1,8 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import DataTableDevice from '@/components/DataTableDevice.vue'
+import { useProject } from '@/stores/project'
 
 const dialog = ref(false)
+const storeProject = useProject()
+const route = useRoute()
+const id = route.params.id
+
+const filteredProject = computed(() => {
+  return storeProject.getProjectById(id)
+})
 </script>
 
 <template>
@@ -14,8 +23,8 @@ const dialog = ref(false)
         @click="$router.go(-1)"
       />
       <div class="text-end">
-        <h2>My_Smart-IOT</h2>
-        <p>This project usefull for make API To Conenct  IoT Smart Meter App.</p>
+        <h2>{{ filteredProject?.nameProject }}</h2>
+        <p>{{ filteredProject?.descriptionProject }}</p>
       </div>
     </div>
     <VCard class="pa-6">
