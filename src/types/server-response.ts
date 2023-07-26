@@ -1,14 +1,54 @@
-// interface User {
-//   id: string
-//   name: string
-//   email: string
-//   phone: string
-//   fcm_token?: string
-//   email_verified_at: string
-//   deleted_at?: string
-//   created_at: string
-//   updated_at: string
-//   token: string
-//   role_name: string
-//   company_id: string
-// }
+export interface ServerResponse<T> {
+  status: number
+  msg: string
+  data: T
+  dataUser: T
+  meta?: Meta
+}
+
+export interface Meta {
+  current_page: number
+  from: number
+  last_page: number
+  next_page_url?: string
+  path?: string
+  per_page: number
+  prev_page_url?: string
+  to: number
+  total: number
+}
+
+export interface AllProject {
+  idProject: string
+  nameProject: string
+  descProject: string
+  devices: Device[]
+}
+
+export interface Device {
+  id: string
+  name: string
+  description: string
+  size: number
+}
+
+export interface Project {
+  idProject: string
+  nameProject: string
+  descriptionProject: string
+}
+
+export interface User {
+  username: string
+  nama: string
+  email: string
+  nohp: string
+  token?: string
+  package: Package
+}
+
+export interface Package {
+  type_package: string
+  description_package: string
+  sum_of_device: string
+}
