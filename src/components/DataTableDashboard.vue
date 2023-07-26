@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { VDataTable } from 'vuetify/labs/VDataTable'
+import { useDashboard } from '@/stores/dashboard'
 import heroEmpty1 from '@images/hero/hero-empty1.png'
 
+const storeAllProject = useDashboard()
 const searchConnectedDevice = ref('')
 
 const connectedDevicesHeaders = [
@@ -10,45 +12,22 @@ const connectedDevicesHeaders = [
   { title: 'Nama Proyek', key: 'projectName' },
 ]
 
-const connectedDevices = [
-  {
-    deviceName: 'Chrome on Windows',
-    projectName: 'HP Spectre 360',
-  },
-  {
-    deviceName: 'Chrome on iPhone',
-    projectName: 'iPhone 12x',
-  },
-  {
-    deviceName: 'Chrome on Android',
-    projectName: 'Oneplus 9 Pro',
-  },
-  {
-    deviceName: 'Chrome on MacOS',
-    projectName: 'Apple iMac',
-  },
-  {
-    deviceName: 'Chrome on Windows',
-    projectName: 'HP Spectre 360',
-  },
-  {
-    deviceName: 'Chrome on Android',
-    projectName: 'Oneplus 9 Pro',
-  },
-]
-
 const filteredConnectedDevices = computed(() => {
-  return connectedDevices.filter(dataDevices =>
-    dataDevices.deviceName.toLowerCase().includes(
+  return storeAllProject.getProjectDevice.filter(dataDevices =>
+    dataDevices.projectName.toLowerCase().includes(
       searchConnectedDevice.value.toLowerCase(),
     ),
   )
+})
+
+onMounted(() => {
+  storeAllProject.getAllProject()
 })
 </script>
 
 <template>
   <VCard
-    v-if="connectedDevices.length > 0"
+    v-if="storeAllProject.allProject.length !== 0"
     class="pa-6"
   >
     <VCardTitle class="pa-0">
@@ -66,10 +45,12 @@ const filteredConnectedDevices = computed(() => {
       hide-details
       class="border-0"
     />
+
     <VDataTable
+      :loading="storeAllProject.isLoading"
       :headers="connectedDevicesHeaders"
       :items="filteredConnectedDevices"
-      class="my-6 border"
+      class="my-6 border rounded"
     />
   </VCard>
 
