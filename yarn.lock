@@ -3222,6 +3222,11 @@
   "resolved" "https://registry.npmjs.org/is-map/-/is-map-2.0.2.tgz"
   "version" "2.0.2"
 
+"is-mobile@^2.2.2":
+  "integrity" "sha512-wW/SXnYJkTjs++tVK5b6kVITZpAZPtUrt9SF80vvxGiF/Oywal+COk1jlRkiVq15RFNEQKQY31TkV24/1T5cVg=="
+  "resolved" "https://registry.npmjs.org/is-mobile/-/is-mobile-2.2.2.tgz"
+  "version" "2.2.2"
+
 "is-negative-zero@^2.0.2":
   "integrity" "sha512-dqJvarLawXsFbNDeJW7zAz8ItJ9cd28YufuuFzh0G8pNHjJMnY08Dv7sYX2uF5UpQOwieAeOExEYAWWfu7ZZUA=="
   "resolved" "https://registry.npmjs.org/is-negative-zero/-/is-negative-zero-2.0.2.tgz"
@@ -5485,6 +5490,11 @@
   "resolved" "https://registry.npmjs.org/vue-chartjs/-/vue-chartjs-5.2.0.tgz"
   "version" "5.2.0"
 
+"vue-cookies@^1.8.3":
+  "integrity" "sha512-VBRsyRMVdahBgFfh389TMHPmDdr4URDJNMk4FKSCfuNITs7+jitBDhwyL4RJd3WUsfOYNNjPAkfbehyH9AFuoA=="
+  "resolved" "https://registry.npmjs.org/vue-cookies/-/vue-cookies-1.8.3.tgz"
+  "version" "1.8.3"
+
 "vue-demi@>=0.14.0":
   "integrity" "sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA=="
   "resolved" "https://registry.npmjs.org/vue-demi/-/vue-demi-0.14.5.tgz"
@@ -5581,6 +5591,14 @@
   "integrity" "sha512-96qP8JDqB9vwU7bkG5nVU+E0UGQn7yYQVqUUCLQMYWDuQyu2vE77H/UFZ1yI+hwzlSTBKT9BqnNG8JsFegB3eg=="
   "resolved" "https://registry.npmjs.org/vue3-apexcharts/-/vue3-apexcharts-1.4.1.tgz"
   "version" "1.4.1"
+
+"vue3-cookies@^1.0.1":
+  "integrity" "sha512-sjkcZSHibVkxzw4zoktvCewhOA5vmTON2GphPfudHK70LiEaDPOmw/aserqNQophqVrlvsjFjKMBTxC0ISrAGA=="
+  "resolved" "https://registry.npmjs.org/vue3-cookies/-/vue3-cookies-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "is-mobile" "^2.2.2"
+    "vue" "^3.0.0"
 
 "vue3-perfect-scrollbar@^1.6.0":
   "integrity" "sha512-r9wfxlFwVyHXMPKG0PnR7fDfJPQ20KEVzKQfSU5by2WKYz2PwV0bTfyfejmEyZXsXL0O8VtSWtgxfPuFR2AGOg=="
