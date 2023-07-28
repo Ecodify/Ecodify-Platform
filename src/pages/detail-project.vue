@@ -1,17 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 import DataTableDevice from '@/components/DataTableDevice.vue'
-import { useProject } from '@/stores/project'
 
 const dialog = ref(false)
-const storeProject = useProject()
-const route = useRoute()
-const id = route.params.id
-
-const filteredProject = computed(() => {
-  return storeProject.getProjectById(id)
-})
+const urlParams = new URLSearchParams(window.location.search)
+const projectName = urlParams.get('projectName') as string
+const projectDescription = urlParams.get('projectDescription') as string
 </script>
 
 <template>
@@ -23,8 +17,8 @@ const filteredProject = computed(() => {
         @click="$router.go(-1)"
       />
       <div class="text-end">
-        <h2>{{ filteredProject?.nameProject }}</h2>
-        <p>{{ filteredProject?.descriptionProject }}</p>
+        <h2>{{ projectName }}</h2>
+        <p>{{ projectDescription }}</p>
       </div>
     </div>
     <VCard class="pa-6">

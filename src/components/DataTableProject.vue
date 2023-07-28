@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import DeleteDialog from './DeleteDialog.vue'
 import EditDialog from './EditDialog.vue'
@@ -8,6 +9,7 @@ import { useProject } from '@/stores/project'
 
 const searchConnectedDevice = ref('')
 const storeProject = useProject()
+const router = useRouter()
 
 const projectHeaders = [
   { title: 'Nama Proyek', key: 'projectName' },
@@ -22,6 +24,14 @@ const filteredlistProject = computed(() => {
     ),
   )
 })
+
+function navigateToDetailProject(projectId: string, projectName: string, projectDescription: string) {
+  router.push({
+    name: 'detail-project',
+    params: { id: projectId },
+    query: { projectId, projectName, projectDescription },
+  })
+}
 
 onMounted(() => {
   storeProject.getProject()
@@ -49,8 +59,10 @@ onMounted(() => {
           variant="text"
           icon="mdi-eye-outline"
           color="info"
-          :to="{ name: 'detail-project', params: { id: `${item.raw.projectId}` } }"
+          @click="navigateToDetailProject(item.raw.projectId, item.raw.projectName, item.raw.projectDescription)"
         />
+
+        <!-- {{ item }} -->
 
         <EditDialog />
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { VDataTable } from 'vuetify/labs/VDataTable'
 import DeleteDialog from './DeleteDialog.vue'
 import EditDialog from './EditDialog.vue'
@@ -9,7 +9,9 @@ import { useDevice } from '@/stores/device'
 
 const searchConnectedDevice = ref('')
 const storeDevice = useDevice()
-const route = useRoute()
+const router = useRouter()
+const urlParams = new URLSearchParams(window.location.search)
+const getProjectId = urlParams.get('projectId') as string
 
 const connectedDevicesHeaders = [
   { title: 'Nama Perangkat', key: 'deviceName' },
@@ -25,10 +27,17 @@ const filteredConnectedDevices = computed(() => {
   )
 })
 
-onMounted(() => {
-  const id = route.params.id
+function navigateToDetailDevice(deviceId: string, projectId: string, deviceName: string, deviceDescription: string, deviceSize: number) {
+  router.push({
+    name: 'detail-device',
+    params: { id: deviceId },
+    query: { deviceId, projectId, deviceName, deviceDescription, deviceSize },
+  })
+}
 
-  storeDevice.getDevice(id)
+onMounted(() => {
+  storeDevice.getDevice(getProjectId)
+  console.log(getProjectId)
 })
 </script>
 
@@ -53,7 +62,7 @@ onMounted(() => {
           variant="text"
           icon="mdi-eye-outline"
           color="info"
-          :to="{ name: 'detail-device', params: { id: `${item.raw.deviceId}` } }"
+          @click="navigateToDetailDevice(item.raw.deviceId, getProjectId, item.raw.deviceName, item.raw.deviceDescription, item.raw.deviceSize)"
         />
 
         <EditDialog />

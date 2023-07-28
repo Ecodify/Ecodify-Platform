@@ -44,11 +44,13 @@ const router = createRouter({
         {
           path: '/project/:id',
           name: 'detail-project',
+          props: true,
           component: () => import('../pages/detail-project.vue'),
         },
         {
           path: '/device/:id',
           name: 'detail-device',
+          props: true,
           component: () => import('../pages/detail-device.vue'),
         },
         {

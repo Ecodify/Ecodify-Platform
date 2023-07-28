@@ -1,40 +1,19 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
 import VueJsonPretty from 'vue-json-pretty'
-import { useDevice } from '@/stores/device'
+import { useData } from '@/stores/data'
 import 'vue-json-pretty/lib/styles.css'
 
-const storeDevice = useDevice()
-const route = useRoute()
-const id = route.params.id
+const urlParams = new URLSearchParams(window.location.search)
+const getDeviceId = urlParams.get('deviceId') as string
+const getProjectId = urlParams.get('projectId') as string
+const getDeviceName = urlParams.get('deviceName') as string
+const getDeviceDescription = urlParams.get('deviceDescription') as string
 
-const filteredDevice = computed(() => {
-  return storeDevice.getDeviceById(id)
-})
-
-const dataExample = [
-  {
-    path: '/',
-    component: 'showHeader',
-    children: [
-      { path: '', component: 'showHome' },
-      { path: '/contact', component: 'showContact' },
-      { path: '/about', component: 'showAbout' },
-    ],
-  },
-  {
-    path: '/blog',
-    component: 'showBlog',
-    children: [
-      { path: '', component: 'showPosts' },
-      { path: '/blog/:id', name: 'post', component: 'showPost' },
-    ],
-  },
-  { path: '/loading', component: 'showLoading' },
-]
+const storeData = useData()
 
 onMounted(() => {
-  
+  storeData.getData(getProjectId, getDeviceId)
+  console.log(storeData.data)
 })
 </script>
 
@@ -47,15 +26,15 @@ onMounted(() => {
         @click="$router.go(-1)"
       />
       <div class="text-end">
-        <h2>{{ filteredDevice?.name }}</h2>
-        <p>{{ filteredDevice?.description }}</p>
+        <h2>{{ getDeviceName }}</h2>
+        <p>{{ getDeviceDescription }}</p>
       </div>
     </div>
     <VCard class="pa-6">
       <VCardTitle class="pa-0">
         <div class="d-flex justify-space-between">
           <p class="text-h5">
-            Perangkat Anda <span class="text-primary">{{ filteredDevice?.name }}</span>
+            Perangkat Anda <span class="text-primary">{{ getDeviceName }}</span>
           </p>
         </div>
       </VCardTitle>
@@ -96,7 +75,7 @@ onMounted(() => {
         </VToolbar>
         <VueJsonPretty
           class="pa-4"
-          :data="dataExample"
+          :data="storeData.data"
         />
       </VCard>
     </VCard>
