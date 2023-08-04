@@ -73,6 +73,8 @@ export const api = {
   ): Promise<ServerResponse<T>> => {
     const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.body, option?.headers)
 
+    console.log(`headers: ${newHeaders.value}`)
+
     const response = await fetch(newUrl, {
       method: 'POST',
       headers: newHeaders,

@@ -11,6 +11,17 @@ const getDeviceDescription = urlParams.get('deviceDescription') as string
 
 const storeData = useData()
 
+function copyToClipboard() {
+  const el = document.createElement('textarea')
+
+  el.value = storeData.getDataJson
+  document.body.appendChild(el)
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
+  alert('Teks JSON berhasil disalin ke clipboard!')
+}
+
 onMounted(() => {
   storeData.getData(getProjectId, getDeviceId)
   console.log(storeData.data)
@@ -55,6 +66,7 @@ onMounted(() => {
           <VBtn
             icon
             color="white"
+            @click="copyToClipboard"
           >
             <VIcon>mdi-content-copy</VIcon>
           </VBtn>

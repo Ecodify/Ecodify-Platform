@@ -24,13 +24,8 @@ export const useData = defineStore('data', {
     },
   },
   getters: {
-    // getDataTableDevice: state => {
-    //   return state.device.map(value => ({
-    //     deviceId: value.id,
-    //     deviceName: value.name,
-    //     deviceDescription: value.description,
-    //     deviceSize: value.size,
-    //   }))
-    // },
+    getDataJson: state => {
+      return JSON.stringify(state.data)
+    },
   },
 })

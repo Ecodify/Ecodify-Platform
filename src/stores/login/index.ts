@@ -29,8 +29,6 @@ export const useLogin = defineStore('login', {
         const storeAuth = useAuth()
 
         storeAuth.signIn(result.dataUser.token as string)
-
-        // navigateTo('/dashboard')
       }).catch(reason => {
         console.error(reason.message)
 

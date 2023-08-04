@@ -1,7 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import VueCookies from 'vue-cookies'
+import { useProject } from '@/stores/project'
+import { useCreateProject } from '@/stores/project/create-project'
 
 const dialog = ref(false)
+const storeCreateProject = useCreateProject()
+const storeProject = useProject()
+const getToken = VueCookies.get('token') as string
+
+const onCreateProject = async () => {
+  storeCreateProject.setToken(getToken)
+  await storeCreateProject.createProject()
+
+  // storeProject.getProject()
+}
 </script>
 
 <template>
@@ -42,20 +55,23 @@ const dialog = ref(false)
           <VRow class="d-block">
             <VCol cols="12">
               <VTextField
+                v-model="storeCreateProject.projectName"
                 label="Nama Proyek"
                 required
               />
             </VCol>
             <VCol cols="12">
               <VTextarea
+                v-model="storeCreateProject.description"
                 label="Deskripsi Proyek"
                 required
               />
             </VCol>
             <VCol cols="12">
               <VBtn
+               :loading="storeCreateProject.isLoading"
                 class="btn btn-primary d-block w-100"
-                @click="dialog = false"
+                @click="onCreateProject"
               >
                 Buat
               </VBtn>

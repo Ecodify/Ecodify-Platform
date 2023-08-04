@@ -22,9 +22,7 @@ app.use(vuetify)
 app.use(createPinia())
 app.use(router)
 app.use(VueJsonPretty)
-app.use(VueCookies, {
-  expires: '1h',
-})
+app.use(VueCookies)
 
 // Mount vue app
 app.mount('#app')

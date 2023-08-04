@@ -33,7 +33,7 @@ export interface Device {
 }
 
 export interface Project {
-  idProject: string
+  token: string
   nameProject: string
   descriptionProject: string
 }
