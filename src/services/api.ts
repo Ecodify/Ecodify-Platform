@@ -30,6 +30,14 @@ export const api = {
       }
     }
 
+    // if (!(body instanceof URLSearchParams)) {
+    //   newHeaders = {
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'token': `${getToken}`,
+    //     ...headers,
+    //   }
+    // }
+
     newHeaders = {
       Accept: 'application/json',
       token: `${getToken}`,
@@ -73,8 +81,6 @@ export const api = {
   ): Promise<ServerResponse<T>> => {
     const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.body, option?.headers)
 
-    console.log(`headers: ${newHeaders.value}`)
-
     const response = await fetch(newUrl, {
       method: 'POST',
       headers: newHeaders,
@@ -92,12 +98,14 @@ export const api = {
       headers?: Record<string, string>
     },
   ): Promise<ServerResponse<T>> => {
-    const { newUrl, newHeaders } = api.provider(url, option?.queryParams, option?.body, option?.headers)
+    const { newUrl } = api.provider(url, option?.queryParams, option?.body, option?.headers)
 
     const response = await fetch(newUrl, {
       method: 'PUT',
-      headers: newHeaders,
-      body: JSON.stringify(option?.body),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: option?.body instanceof URLSearchParams ? option.body : JSON.stringify(option?.body),
     })
 
     return await api.afterResponse<T>(response)
