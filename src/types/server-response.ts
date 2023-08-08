@@ -26,6 +26,7 @@ export interface AllProject {
 }
 
 export interface Device {
+  token: string
   id: string
   name: string
   description: string
@@ -34,6 +35,7 @@ export interface Device {
 
 export interface Project {
   token: string
+  idProject: string
   nameProject: string
   descriptionProject: string
 }
