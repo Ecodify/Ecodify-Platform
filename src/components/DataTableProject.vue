@@ -2,8 +2,8 @@
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { VDataTable } from 'vuetify/labs/VDataTable'
-import DeleteDialog from './DeleteDialog.vue'
-import EditDialog from './EditDialog.vue'
+import DeleteDialog from './project/DeleteDialog.vue'
+import EditDialog from './project/EditDialog.vue'
 import heroEmpty2 from '@images/hero/hero-empty2.png'
 import { useProject } from '@/stores/project'
 
@@ -62,11 +62,16 @@ onMounted(() => {
           @click="navigateToDetailProject(item.raw.projectId, item.raw.projectName, item.raw.projectDescription)"
         />
 
-        <!-- {{ item }} -->
+        <EditDialog
+          :id="item.raw.projectId"
+          :project-name="item.raw.projectName"
+          :project-description="item.raw.projectDescription"
+        />
 
-        <EditDialog />
-
-        <DeleteDialog />
+        <DeleteDialog
+          :id="item.raw.projectId"
+          :project-name="item.raw.projectName"
+        />
       </template>
     </VDataTable>
   </div>

@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import DataTableDevice from '@/components/DataTableDevice.vue'
+import CreateDialog from '@/components/device/CreateDialog.vue'
 
-const dialog = ref(false)
 const urlParams = new URLSearchParams(window.location.search)
+const projectId = urlParams.get('projectId') as string
 const projectName = urlParams.get('projectName') as string
 const projectDescription = urlParams.get('projectDescription') as string
 </script>
@@ -26,64 +26,7 @@ const projectDescription = urlParams.get('projectDescription') as string
         <div class="d-flex justify-space-between">
           <span class="text-h5">Perangkat anda</span>
 
-          <VDialog
-            v-model="dialog"
-            persistent
-            width="auto"
-          >
-            <template #activator="{ props }">
-              <VBtn
-                v-bind="props"
-                prepend-icon="mdi-plus"
-              >
-                Tambah
-              </VBtn>
-            </template>
-            <VCard>
-              <VCardTitle class="mt-6">
-                <div class="d-flex justify-space-between">
-                  <span class="text-h5 ">Buat Proyek</span>
-                  <VBtn
-                    variant="text"
-                    @click="dialog = false"
-                  >
-                    <VIcon>mdi-close</VIcon>
-                  </VBtn>
-                </div>
-              </VCardTitle>
-              <VCardSubtitle>
-                <p class="text-h12">
-                  Buat projek untuk kemudahan pemantauan unit.
-                </p>
-              </VCardSubtitle>
-              <VCardText>
-                <VContainer class="pa-0">
-                  <VRow class="d-block">
-                    <VCol cols="12">
-                      <VTextField
-                        label="Nama Proyek"
-                        required
-                      />
-                    </VCol>
-                    <VCol cols="12">
-                      <VTextarea
-                        label="Deskripsi Proyek"
-                        required
-                      />
-                    </VCol>
-                    <VCol cols="12">
-                      <VBtn
-                        class="btn btn-primary d-block w-100"
-                        @click="dialog = false"
-                      >
-                        Buat
-                      </VBtn>
-                    </VCol>
-                  </VRow>
-                </VContainer>
-              </VCardText>
-            </VCard>
-          </VDialog>
+          <CreateDialog :id-project="projectId" />
         </div>
       </VCardTitle>
       <p class="text-primary">

@@ -24,7 +24,6 @@ function copyToClipboard() {
 
 onMounted(() => {
   storeData.getData(getProjectId, getDeviceId)
-  console.log(storeData.data)
 })
 </script>
 

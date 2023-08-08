@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CreateDialog from '@/components/CreateDialog.vue'
+import CreateDialog from '@/components/project/CreateDialog.vue'
 import DataTableDashboard from '@/components/DataTableDashboard.vue'
 </script>
 

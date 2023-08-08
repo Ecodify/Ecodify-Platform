@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { VDataTable } from 'vuetify/labs/VDataTable'
-import DeleteDialog from './DeleteDialog.vue'
-import EditDialog from './EditDialog.vue'
+import DeleteDialog from './device/DeleteDialog.vue'
+import EditDialog from './device/EditDialog.vue'
 import heroEmpty3 from '@images/hero/hero-empty3.png'
 import { useDevice } from '@/stores/device'
 
@@ -37,7 +37,6 @@ function navigateToDetailDevice(deviceId: string, projectId: string, deviceName:
 
 onMounted(() => {
   storeDevice.getDevice(getProjectId)
-  console.log(getProjectId)
 })
 </script>
 
@@ -65,9 +64,17 @@ onMounted(() => {
           @click="navigateToDetailDevice(item.raw.deviceId, getProjectId, item.raw.deviceName, item.raw.deviceDescription, item.raw.deviceSize)"
         />
 
-        <EditDialog />
-
-        <DeleteDialog />
+        <EditDialog
+          :project-id="getProjectId"
+          :device-id="item.raw.deviceId"
+          :device-name="item.raw.deviceName"
+          :device-description="item.raw.deviceDescription"
+        />
+        <DeleteDialog
+          :id-project="getProjectId"
+          :id-device="item.raw.deviceId"
+          :device-name="item.raw.deviceName"
+        />
       </template>
     </VDataTable>
   </div>
