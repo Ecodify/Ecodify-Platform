@@ -8,7 +8,8 @@ export const api = {
     body?: Record<string, string | '' | string[] | undefined | null> | FormData | undefined,
     headers?: Record<string, string> | undefined): { newUrl: string; newHeaders: Record<string, string> } => {
     const token = useAuth().token
-    const getToken = VueCookies.get('token') as string
+
+    const getToken = $cookies.get('token') as string
     const baseUrl = import.meta.env.VITE_PUBLIC_API_BASE_URL
 
     if (token) {
@@ -29,14 +30,6 @@ export const api = {
         ...headers,
       }
     }
-
-    // if (!(body instanceof URLSearchParams)) {
-    //   newHeaders = {
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //     'token': `${getToken}`,
-    //     ...headers,
-    //   }
-    // }
 
     newHeaders = {
       Accept: 'application/json',

@@ -39,6 +39,12 @@ export interface Project {
   nameProject: string
   descriptionProject: string
 }
+export interface Controlling {
+  token: string
+  idProject: string
+  idDevice: string
+  data: string
+}
 
 export interface User {
   username: string

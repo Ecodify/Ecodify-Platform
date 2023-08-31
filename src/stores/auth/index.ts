@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import type { CookiesConfig } from 'vue-cookies'
 import VueCookies from 'vue-cookies'
+import router from '@/router'
 
 export const useAuth = defineStore('auth', {
   state: () => ({
@@ -22,7 +23,11 @@ export const useAuth = defineStore('auth', {
 
       const options: CookiesConfig = { expires: '1h', sameSite: 'lax', secure: true }
 
-      VueCookies.set('token', token, options)
+      if (this.token) {
+        VueCookies.set('token', token, options)
+
+        router.push('/dashboard')
+      }
     },
 
     signOut() {

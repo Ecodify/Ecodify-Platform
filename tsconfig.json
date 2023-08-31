@@ -57,7 +57,8 @@
     "src/**/*.vue",
     "themeConfig.ts",
     "auto-imports.d.ts",
-    "components.d.ts"
+    "components.d.ts",
+    "vue.d.ts"
   ],
   "exclude": [
     "dist",
