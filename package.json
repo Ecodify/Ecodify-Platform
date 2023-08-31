@@ -37,6 +37,7 @@
     "vue-json-pretty": "^2.2.4",
     "vue-prism-component": "^2.0.0",
     "vue-router": "^4.0.13",
+    "vue-sweetalert2": "^5.0.5",
     "vue3-apexcharts": "^1.4.1",
     "vue3-cookies": "^1.0.1",
     "vue3-perfect-scrollbar": "^1.6.0",

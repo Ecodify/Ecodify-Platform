@@ -5174,6 +5174,11 @@
     "csso" "^5.0.5"
     "picocolors" "^1.0.0"
 
+"sweetalert2@11.x":
+  "integrity" "sha512-QbRXGQn1sb7HEhzA/K2xtWIwQHh/qkSbb1w6jYcTql2xy17876lTREEt1D4X6Q0x2wHtfUjKJ+Cb8IVkRoq7DQ=="
+  "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.7.27.tgz"
+  "version" "11.7.27"
+
 "synckit@^0.8.5":
   "integrity" "sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q=="
   "resolved" "https://registry.npmjs.org/synckit/-/synckit-0.8.5.tgz"
@@ -5597,6 +5602,13 @@
   dependencies:
     "shepherd.js" "^11.1.0"
 
+"vue-sweetalert2@^5.0.5":
+  "integrity" "sha512-Q7+TjQxNwGruT2jfPaSKMz18HHWs81r4umEwlrrtOf/QL5Iwl1T+tUaNkcvKB7Rf9rYftubt7NnOMjfDMnDH3A=="
+  "resolved" "https://registry.npmjs.org/vue-sweetalert2/-/vue-sweetalert2-5.0.5.tgz"
+  "version" "5.0.5"
+  dependencies:
+    "sweetalert2" "11.x"
+
 "vue-template-compiler@^2.7.14":
   "integrity" "sha512-zyA5Y3ArvVG0NacJDkkzJuPQDF8RFeRlzV2vLeSnhSpieO6LK2OVbdLPi5MPPs09Ii+gMO8nY4S3iKQxBxDmWQ=="
   "resolved" "https://registry.npmjs.org/vue-template-compiler/-/vue-template-compiler-2.7.14.tgz"
@@ -5614,7 +5626,7 @@
     "@volar/vue-typescript" "1.6.5"
     "semver" "^7.3.8"
 
-"vue@^2.6.12 || ^3.2.4", "vue@^2.6.14 || ^3.3.0", "vue@^2.7.0 || ^3.2.25", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.0-0 || ^2.7.0", "vue@^3.0.11", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.3.4", "vue@> 3.0.0", "vue@>=3", "vue@>=3.0.0", "vue@2 || 3", "vue@3.3.4":
+"vue@*", "vue@^2.6.12 || ^3.2.4", "vue@^2.6.14 || ^3.3.0", "vue@^2.7.0 || ^3.2.25", "vue@^3.0.0", "vue@^3.0.0-0 || ^2.6.0", "vue@^3.0.0-0 || ^2.7.0", "vue@^3.0.11", "vue@^3.2.0", "vue@^3.2.25", "vue@^3.3.4", "vue@> 3.0.0", "vue@>=3", "vue@>=3.0.0", "vue@2 || 3", "vue@3.3.4":
   "integrity" "sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-3.3.4.tgz"
   "version" "3.3.4"

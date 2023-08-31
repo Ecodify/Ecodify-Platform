@@ -9,8 +9,10 @@ import '@layouts/styles/index.scss'
 import '@styles/styles.scss'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-import VueJsonPretty from 'vue-json-pretty'
 import VueCookies from 'vue-cookies'
+import VueJsonPretty from 'vue-json-pretty'
+import VueSweetalert2 from 'vue-sweetalert2'
+import 'sweetalert2/dist/sweetalert2.min.css'
 
 loadFonts()
 
@@ -23,6 +25,7 @@ app.use(createPinia())
 app.use(router)
 app.use(VueJsonPretty)
 app.use(VueCookies)
+app.use(VueSweetalert2)
 
 // Mount vue app
 app.mount('#app')
