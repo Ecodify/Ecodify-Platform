@@ -34,11 +34,13 @@ const router = createRouter({
       },
       children: [
         {
+          name: 'dashboard',
           path: 'dashboard',
           component: () => import('../pages/dashboard.vue'),
         },
         {
           path: 'project',
+          name: 'project',
           component: () => import('../pages/project.vue'),
         },
         {
@@ -63,23 +65,23 @@ const router = createRouter({
         },
         {
           path: 'typography',
-          component: () => import('../pages/typography.vue'),
+          component: () => import('../pages/utils/typography.vue'),
         },
         {
           path: 'icons',
-          component: () => import('../pages/icons.vue'),
+          component: () => import('../pages/utils/icons.vue'),
         },
         {
           path: 'cards',
-          component: () => import('../pages/cards.vue'),
+          component: () => import('../pages/utils/cards.vue'),
         },
         {
           path: 'tables',
-          component: () => import('../pages/tables.vue'),
+          component: () => import('../pages/utils/tables.vue'),
         },
         {
           path: 'form-layouts',
-          component: () => import('../pages/form-layouts.vue'),
+          component: () => import('../pages/utils/form-layouts.vue'),
         },
       ],
     },

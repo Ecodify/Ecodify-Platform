@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import axios from 'axios'
-import { RouterLink, useRouter } from 'vue-router'
-import VueCookies from 'vue-cookies'
+import { RouterLink } from 'vue-router'
 import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
 import logo from '@images/logo.svg?raw'
 
@@ -9,48 +7,11 @@ import { useLogin } from '@/stores/login'
 
 const store = useLogin()
 
-// const baseUrl = import.meta.env.VITE_PUBLIC_API_BASE_URL
-
 const form = ref({
-  // username: 'develop',
-  // password: 'develop',
   remember: false,
 })
 
-// const router = useRouter()
 const isPasswordVisible = ref(false)
-
-// let isLoading = false
-
-// async function login() {
-//   try {
-//     isLoading = true
-
-//     const response = await axios.post(
-//       `${baseUrl}/Login`, {
-//         username: form.value.username,
-//         password: form.value.password,
-//       },
-//     )
-
-//     if (response.data.status) {
-//       VueCookies.set('data_user', JSON.stringify(response.data.dataUser), { expires: '1h' })
-
-//       VueCookies.set('token', response.data.dataUser.token, { expires: '1h' })
-//     }
-
-//     // localStorage.setItem('token', response.data.dataUser.token)
-//     // localStorage.setItem('data_user', JSON.stringify(response.data.dataUser))
-
-//     router.push('/dashboard')
-//   }
-//   catch (error) {
-//     console.error(error)
-//   }
-//   finally {
-//     setTimeout(() => (isLoading = false), 3000)
-//   }
-// }
 </script>
 
 <template>

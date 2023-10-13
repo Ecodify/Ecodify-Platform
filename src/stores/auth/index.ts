@@ -26,16 +26,20 @@ export const useAuth = defineStore('auth', {
       if (this.token) {
         VueCookies.set('token', token, options)
 
-        router.push('/dashboard')
+        localStorage.setItem('token', token as string)
+
+        router.push({ name: 'dashboard' })
       }
     },
 
     signOut() {
-      this.token = null
-
       const options: CookiesConfig = { sameSite: 'lax', secure: true }
 
-      VueCookies.set('token', null, options)
+      VueCookies.remove('token', options)
+
+      localStorage.clear()
+
+      router.push({ name: 'login' })
 
       setTimeout(() => {
         location.reload()

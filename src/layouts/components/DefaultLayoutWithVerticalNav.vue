@@ -57,13 +57,15 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
           to: '/profile',
         }"
       />
-      <VerticalNavLink
+      <!--
+        <VerticalNavLink
         :item="{
-          title: 'Account Settings',
-          icon: 'mdi-account-cog-outline',
-          to: '/account-settings',
+        title: 'Account Settings',
+        icon: 'mdi-account-cog-outline',
+        to: '/account-settings',
         }"
-      />
+        />
+      -->
     </template>
 
     <!-- 👉 Pages -->
